@@ -53,23 +53,18 @@ def cs_go():
 
 
 def analysis_data(data):
-    code = data[0]
-    mode = data[1]
+    mode = data[0]
+    code = data[1]
     key = data[2] + data[3]
-    rx_left = data[4][0:4]
-    rx_right = data[4][4:8]
-    ry_left = data[5][0:4]
-    ry_right = data[5][4:8]
-    lx_left = data[6][0:4]
-    lx_right = data[6][4:8]
-    ly_left = data[7][0:4]
-    ly_right = data[7][4:8]
-
+    rx = data[4]
+    ry= data[5]
+    lx= data[6]
+    ly = data[7]
     data_dic = {"code": code, "mode": mode, "key": key,
-                "rx_left": rx_left, "rx_right": rx_right,
-                "ry_left": ry_left, "ry_right": ry_right,
-                "lx_left": lx_left, "lx_right": lx_right,
-                "ly_left": ry_left, "ly_right": ry_right,
+                "rx": rx, 
+                "ry": ry, 
+                "lx": lx,
+                "ly": ly,
                 }
     return data_dic
 
@@ -93,9 +88,6 @@ def list_to_binary(data, is_reversal=None):
     return res
 
 
-list_to_binary([1, 1, 3, 1], 0)
-
-
 def ps2_start():
     flag = 1
     while flag:
@@ -108,43 +100,13 @@ def ps2_start():
                 print(key_num)
                 if key_num == 1:
                     flag = 0
-
-        '''        
-        rx_left = list_to_binary(data['rx_left'],1)
-        rx_right=list_to_binary(data['rx_right'],1)
-        ry_left = list_to_binary(data['ry_left'],1)
-        ry_right=list_to_binary(data['ry_right'],1)
-
-
-
-        lx_left=list_to_binary(data['lx_left'],1)
-        lx_right=list_to_binary(data['lx_right'],1)      
-        ly_left = list_to_binary(data['ly_left'],1)
-        ly_right=list_to_binary(data['ly_right'],1)
-
-
-        if rx_left:
-            print('rx_l',rx_left)
-        if rx_right:
-            print('rx_r',rx_right)
-        if ry_left:
-            print('ry_l',ry_left)
-        if ry_right:
-            print('ry_r',ry_right)
-
-        if lx_left:
-            print('rx_l',lx_left)
-        if lx_right:
-            print('rx_r',lx_right)
-        if ly_left:
-            print('ry_l',ly_left)
-        if ly_right:
-            print('ry_r',ly_right)          
-
-
-        '''
-
-
+            if list_to_binary(data['mode'])==0b01110011:# 01110011，01000001green
+                analog_list=['rx','ry','lx','ly']
+                for i in analog_list:
+                    analog=list_to_binary(data[i],True)
+                    if (analog !=127) and (analog !=128) :
+                        print(i,'Analog quantity:',analog)
+                    
 ps2_start()
 
 '''
