@@ -46,6 +46,7 @@ def cs_go():
     cs.off()
     do_func(commands[0])
     data.append(do_di_func(commands[1]))
+    
     for i in range(8):
         data.append(di_func())
     cs.on
@@ -87,26 +88,36 @@ def list_to_binary(data, is_reversal=None):
         index += 1
     return res
 
+def get_ps2_key():
+    res_key=[]
+    data=analysis_data(cs_go())
+    key_num = 0
+    for i in data['key']:
+        if i == 0:
+            res_key.append(key_num)
+        key_num += 1
+    res = {}
+    res['key']=res_key
 
-def ps2_start():
-    flag = 1
-    while flag:
-        time.sleep_ms(10)
-        data = analysis_data(cs_go())
-        key_num = 0
-        for i in data['key']:
-            key_num += 1
-            if i == 0:
-                print(key_num)
-                if key_num == 1:
-                    flag = 0
-            if list_to_binary(data['mode'])==0b01110011:# 01110011，01000001green
+    res_analog={}
+    if list_to_binary(data['mode'])==0b01110011:# 01110011，01000001green
                 analog_list=['rx','ry','lx','ly']
                 for i in analog_list:
                     analog=list_to_binary(data[i],True)
-                    if (analog !=127) and (analog !=128) :
-                        print(i,'Analog quantity:',analog)
-                    
+                    res_analog[i]=analog
+                res['analog']=res_analog
+    return res
+        
+def ps2_start():
+    flag=1
+    while flag:
+        res =get_ps2_key()
+        time.sleep_ms(10)
+        if res['key']:print(res)
+        try:
+            if res['analog']:print(res['analog'])
+        except:pass
+        
 ps2_start()
 
 '''
