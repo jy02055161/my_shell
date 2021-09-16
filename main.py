@@ -1,31 +1,19 @@
-from machine import I2C,Pin,ADC
-from ssd1306 import SSD1306_I2C
-import time
-i2c=I2C(0,sda=Pin(0),scl=Pin(1),freq=400000)
-oled = SSD1306_I2C(128,64,i2c)
-T=0.6
+from machine import Pin
 
-oled.fill(1)
-oled.show()
-oled.fill(0)
-oled.show()
-time.sleep(1)
+rs=Pin(15,Pin.OUT)
+r_w=Pin(14,Pin.OUT)
+e_sclk=Pin(13,Pin.OUT)
+d0=Pin(12,Pin.IN)
+d1=Pin(11,Pin.IN)
+d2=Pin(10,Pin.IN)
+d3=Pin(9,Pin.IN)
+d4=Pin(8,Pin.IN)
+d5=Pin(7,Pin.IN)
+d6=Pin(6,Pin.IN)
+d7=Pin(5,Pin.IN)
+psb=Pin(4,Pin.OUT)
 
-humidity= ADC(28)
-is_wet = Pin(27,Pin.IN)
 
-flag = 1
-t=3
+d7.value(1)
 
-while flag:
-    time.sleep(0.3)
-    oled.fill(0)
-    res = humidity.read_u16()
-    res2=is_wet.value()
-    oled.text('humidity: %s'%(0xffff-res),0,0,1)
-
-    oled.text('is_wet: %s' % bool(res2-1), 0, 10, 1)
-
-    oled.text('t:%s' %t, 0, 30,1)
-    oled.show()
 
