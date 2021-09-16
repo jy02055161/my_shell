@@ -28,4 +28,3 @@ while flag:
 
     oled.text('t:%s' %t, 0, 30,1)
     oled.show()
-
