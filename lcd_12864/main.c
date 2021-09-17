@@ -31,7 +31,12 @@ void delay(unsigned  int ms)
 	{
 		unsigned  char i;
 		for(i=0; i<250; i++)  
-		{
+		{	LCD_RS = 0;
+	LCD_RW = 1;
+	LCD_EN = 1;
+	delayNOP();
+	result = (bit)(P0&0x80);
+	LCD_EN = 0;
 			_nop_();			   
 			_nop_();
 			_nop_();
@@ -49,7 +54,12 @@ void delay(unsigned  int ms)
 bit lcd_busy()
 {                          
 	bit result;
-
+	LCD_RS = 0;
+	LCD_RW = 1;
+	LCD_EN = 1;
+	delayNOP();
+	result = (bit)(P0&0x80);
+	LCD_EN = 0;
 	LCD_RS = 0;
 	LCD_RW = 1;
 	LCD_EN = 1;
