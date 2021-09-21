@@ -153,16 +153,7 @@ void Draw_PM(const unsigned  char *ptr)
 			lcd_wdat(*ptr++);
 		}
 	}
-	i = 0x80;
-	for(j=0; j<32; j++)
-	{
-		lcd_wcmd(i++);
-		lcd_wcmd(0x88);	   
-		for(k=0; k<16; k++)
-		{
-			lcd_wdat(*ptr++);
-		} 
-	}  
+
 	lcd_wcmd(0x36);        //打开绘图显示
 	lcd_wcmd(0x30);        //回到基本指令集
 }

@@ -27,12 +27,12 @@ cl_data()
 def check_busy():
     rs.value(0)
     rw.value(1)
+
     e_down()
     is_busy=d7.value()
-    print("is_busy:%s"%is_busy)
 
 
-def send_cmd(cmd):
+def send_cmd(cmd,is_data=1):
     check_busy()
     rs.value(0)
     rw.value(0)
@@ -50,3 +50,25 @@ cmd3=[0,0,0,0,0,1,1,1]
 send_cmd(cmd1)
 send_cmd(cmd2)
 send_cmd(cmd3)
+
+
+
+
+
+def bin_to_list(data, is_reversal=None):
+    bin_list = [1, 2, 4, 8, 16, 32, 64, 128]
+    index = 0
+    res = 0
+    if is_reversal:
+        re_data = []
+        for i in data:
+            if i:
+                re_data.append(0)
+            else:
+                re_data.append(1)
+        data = re_data
+    for i in data:
+        if i:
+            res |= bin_list[index]
+        index += 1
+    return res
